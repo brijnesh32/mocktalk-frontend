@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, googleProvider, facebookProvider } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
-import '../css/login.css';
+import '../css/Login.css';
 
 const Login = ({ isOpen, onClose, setIsLoggedIn }) => {
   const navigate = useNavigate();
