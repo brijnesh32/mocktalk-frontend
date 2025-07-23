@@ -1,0 +1,45 @@
+#faqs {
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.accordion-button {
+    font-weight: 500;
+    font-size: 1.1rem;
+    background-color: #ffffff;
+    justify-content: center !important;
+    /* Ensures the question is centered */
+    text-align: center !important;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-body {
+    font-size: 1rem;
+    color: #444;
+    text-align: center;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.accordion-item {
+    background-color: #fff;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.accordion-button:not(.collapsed)::after {
+    transform: rotate(180deg);
+}
+
+.accordion-button::after {
+    transition: transform 0.3s ease;
+}

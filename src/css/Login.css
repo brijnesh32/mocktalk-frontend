@@ -1,0 +1,91 @@
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    position: relative;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    animation: popIn 0.3s ease;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #333;
+}
+
+.brand {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.login-btn.google {
+    background: #db4437;
+    color: white;
+}
+
+.login-btn.facebook {
+    background: #3b5998;
+    color: white;
+}
+
+.login-btn.signup {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.login-btn:hover {
+    transform: scale(1.03);
+}
+
+.icon {
+    font-size: 1.2rem;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
