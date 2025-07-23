@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/blog.css"; // Keep your styles here
+import "../css/Blog.css"; // Keep your styles here
 
 const Blog = () => {
   const blogs = [
