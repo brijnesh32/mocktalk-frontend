@@ -7,13 +7,13 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCHiyjFMc3dQvtu1Hh2uljPRJ1Q6y-ee3k",
-  authDomain: "mocktalk-a26c6.firebaseapp.com",
-  projectId: "mocktalk-a26c6",
-  storageBucket: "mocktalk-a26c6.firebasestorage.app",
-  messagingSenderId: "627050347766",
-  appId: "1:627050347766:web:040aa5629dfd46321e80d7",
-  measurementId: "G-K8ZN512JS9",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
