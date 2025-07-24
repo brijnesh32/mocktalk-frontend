@@ -23,6 +23,7 @@ DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Add this line to use Whitenoise
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
@@ -38,7 +39,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['mocktalk-backend.onrender.com', 'localhost']
+
 
 
 # Application definition
@@ -90,12 +92,21 @@ WSGI_APPLICATION = 'mocktalk.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# settings.py
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+import dj_database_url
+DATABASES['default'] = dj_database_url.config(
+    default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}", 
+    conn_max_age=600
+)
+
 
 
 # Password validation
@@ -132,7 +143,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -140,9 +150,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 from mongoengine import connect
 
-connect(
-    db="mocktalk_db",  # your DB name
-    host="mongodb://localhost:27017/mocktalk_db"
-)
+connect(host=os.getenv("MONGODB_URI"))
+
 CORS_ALLOW_ALL_ORIGINS = True  # for development only!
 
