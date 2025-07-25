@@ -52,7 +52,7 @@ const Section = ({setIsLoginOpen}) => {
           <button type="button" className="btn btn-primary" onClick={() => setIsLoginOpen(true)}>
             Get Started
           </button>
-          <button type="button" className="btn btn-outline-secondary"onClick={() => window.location.href = "http://localhost:5173/docs/"}>
+          <button type="button" className="btn btn-outline-secondary"onClick={() => window.location.href = "https://mocktalk-frontend-2tiv.vercel.app/docs/"}>
             Learn More
             
           </button>
