@@ -1,0 +1,110 @@
+/* src/page/Contact.css */
+
+.contact-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.contact-hero {
+    background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.contact-hero>.container {
+    position: relative;
+    z-index: 1;
+}
+
+.contact-image {
+    transform: perspective(1000px) rotateY(-15deg);
+    transition: all 0.3s ease;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-image:hover {
+    transform: perspective(1000px) rotateY(0deg);
+}
+
+.contact-form-section {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 15px !important;
+    overflow: hidden;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: #3a7bd5;
+    box-shadow: 0 0 0 0.25rem rgba(58, 123, 213, 0.25);
+}
+
+.submit-btn {
+    background: linear-gradient(to right, #3a7bd5, #00d2ff);
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-button {
+    font-weight: 600;
+    padding: 15px 20px;
+    border-radius: 8px !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa;
+    color: #3a7bd5;
+}
+
+.accordion-body {
+    padding: 20px;
+}
+
+.faq-section {
+    background-color: #ffffff;
+    background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+@media (max-width: 768px) {
+    .contact-hero {
+        text-align: center;
+    }
+
+    .contact-hero .d-flex {
+        justify-content: center;
+    }
+
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}

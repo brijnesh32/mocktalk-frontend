@@ -1,0 +1,154 @@
+/* Ensure this wraps under the topbar and beside the sidebar */
+.campaign-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f3f9ff;
+    min-height: calc(100vh - 60px);
+    box-sizing: border-box;
+}
+
+/* Bot image section */
+.bot-image-container {
+    margin-bottom: 1.5rem;
+    animation: bounce 2s infinite alternate;
+}
+
+.bot-image {
+    width: 140px;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.bot-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+}
+
+/* Chat container box */
+.chat-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Scrollable chat messages */
+.chat-box {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* Message styling */
+.message {
+    max-width: 80%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.message.bot {
+    background-color: #c1dcf3;
+    align-self: flex-start;
+}
+
+.message.user {
+    background-color: #9fdd9f;
+    align-self: flex-end;
+    text-align: right;
+}
+
+/* Input area */
+.input-area {
+    display: flex;
+    gap: 10px;
+}
+
+.input-area input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.input-area button {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: 0 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.1);
+
+}
+
+/* CampaignContent.css */
+input-area img[alt="Start Mic"].active {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        filter: drop-shadow(0 0 0px #4caf50);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 8px #4caf50);
+    }
+
+    100% {
+        filter: drop-shadow(0 0 0px #4caf50);
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes typingAnimation {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+    }
+
+    30% {
+        transform: translateY(-5px);
+    }
+}

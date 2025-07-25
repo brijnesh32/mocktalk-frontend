@@ -1,0 +1,77 @@
+.mocktalk-bg {
+    background: url("../assets/background.gif") center center/cover no-repeat;
+    position: relative;
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Overlay gradient over GIF */
+.mocktalk-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(30, 0, 50, 0.6));
+    z-index: 0;
+}
+
+.mocktalk-bg .container {
+    position: relative;
+    z-index: 1;
+}
+
+.mocktalk-color {
+    color: #00e0ff;
+}
+
+.avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    z-index: 1;
+}
+
+.avatar-stack {
+    margin-left: -15px;
+    z-index: 0;
+}
+
+.avatar-img.bg-primary {
+    background-color: #007bff !important;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.btn-primary {
+    background: #00c6ff;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #0099cc;
+}
+
+.btn-outline-secondary {
+    color: white;
+    border: 2px solid white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-outline-secondary:hover {
+    background: white;
+    color: #000;
+}

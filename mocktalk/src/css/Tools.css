@@ -1,0 +1,8 @@
+.tool-img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tool-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px -12px rgba(43, 155, 223, 0.3);
+}
