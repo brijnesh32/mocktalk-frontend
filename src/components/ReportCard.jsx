@@ -82,7 +82,7 @@ const ReportCard = () => {
         email: email,
       };
 
-      const response = await axios.post("http://127.0.0.1:8000/api/save-report/", reportToSend);
+      const response = await axios.post("https://mocktalk-backend.onrender.com/api/save-report/", reportToSend);
 
       if (response.status === 201 || response.status === 200) {
         alert("Report saved successfully!");

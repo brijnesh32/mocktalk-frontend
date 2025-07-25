@@ -34,7 +34,7 @@ const AudienceContent = () => {
     const fetchReports = async () => {
       if (!userEmail) return;
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/reports/", {
+        const response = await axios.get("https://mocktalk-backend.onrender.com/api/reports/", {
           params: { email: userEmail },
         });
         setReports(response.data.reports);

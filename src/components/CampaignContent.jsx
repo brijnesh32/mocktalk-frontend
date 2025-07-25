@@ -106,7 +106,7 @@ const CampaignContent = () => {
         if (volumeOn) speakText(nextQuestion);
       } else {
         try {
-          const res = await fetch("http://127.0.0.1:8000/api/submit-answers/", {
+          const res = await fetch("https://mocktalk-backend.onrender.com/api/submit-answers/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
