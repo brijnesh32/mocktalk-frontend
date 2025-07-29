@@ -25,15 +25,16 @@ const Contact = () => {
                 </p>
                 <div className="d-flex align-items-center mb-3">
                   <i className="bi bi-envelope-fill fs-4 me-3"></i>
-                  <span>support@mocktalk.ai</span>
+                  <span>brijnesh#1@gmail.com</span>
                 </div>
                 <div className="d-flex align-items-center mb-3">
                   <i className="bi bi-telephone-fill fs-4 me-3"></i>
-                  <span>+1 (555) 123-4567</span>
+                  <span>+91 99209 50035</span>
                 </div>
                 <div className="d-flex align-items-center">
                   <i className="bi bi-geo-alt-fill fs-4 me-3"></i>
-                  <span>123 AI Street, Tech Valley, CA 94025</span>
+                  <span>Thane West, Mumbai, Maharashtra
+</span>
                 </div>
               </div>
               <div className="col-lg-6 d-none d-lg-block">
