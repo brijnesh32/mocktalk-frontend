@@ -1,13 +1,13 @@
 // src/components/Loading.jsx
 import React from 'react';
-import Loading from '../assets/Loading.gif'
-import './Loading.css'; // Import optional styles
+import loadingGif from '../assets/Loading.gif'; // ✅ renamed
+import "../css/Loading.css"; 
 
 const Loading = () => {
   return (
     <div className="loading-container">
       <img
-        src=""
+        src={loadingGif}
         alt="Loading..."
         className="loading-gif"
       />
