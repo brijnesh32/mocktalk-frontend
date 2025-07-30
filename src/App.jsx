@@ -13,7 +13,7 @@ const Contact = lazy(() => import('./page/Contact'));
 import { auth } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
-// ✅ Import custom loading component
+// ✅ Import custom loading component fgfgf
 import Loading from './components/Loading'
 
 const App = () => {
