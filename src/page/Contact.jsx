@@ -25,7 +25,7 @@ const Contact = () => {
                 </p>
                 <div className="d-flex align-items-center mb-3">
                   <i className="bi bi-envelope-fill fs-4 me-3"></i>
-                  <span>brijnesh#1@gmail.com</span>
+                  <span>brijnesh31@gmail.com</span>
                 </div>
                 <div className="d-flex align-items-center mb-3">
                   <i className="bi bi-telephone-fill fs-4 me-3"></i>
