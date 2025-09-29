@@ -10,8 +10,8 @@ const Tools = ({setIsLoginOpen}) => {
   return (
     <section className="py-5 bg-white">
       <div className="container">
-        <h2 className="text-center fw-bold text-primary mb-5 display-5">
-          Introducing <br /> MockTalk.AI Ad Tools
+        <h2 className="text-center fw-bold  mb-5 display-5">
+          Introducing <br /> <span className="text-primary"> MockTalk.AI Ad Tools</span>
         </h2>
 
         {/* Tool 1: Headline Generator */}

@@ -1,9 +1,16 @@
-import React from "react";
 import "../css/Section.css";
+import backgroundGif from "../assets/background.gif"; // your GIF
 
-const Section = ({setIsLoginOpen}) => {
+const Section = () => {
+  const handleGetStarted = () => {
+    console.log("Get Started clicked");
+  };
+
   return (
-    <div className="mocktalk-bg text-center text-dark py-5 px-3 position-relative">
+    <div
+      className="mocktalk-bg text-center text-dark py-5 px-3 position-relative"
+      style={{ backgroundImage: `url(${backgroundGif})` }}
+    >
       <div className="container position-relative z-1 margin-top">
         {/* Headline */}
         <h2 className="fw-bold display-6">
@@ -26,35 +33,41 @@ const Section = ({setIsLoginOpen}) => {
         </div>
 
         {/* User Avatars */}
-<div className="d-flex justify-content-center align-items-center mt-3">
-  {[
-    "https://randomuser.me/api/portraits/men/32.jpg",
-    "https://randomuser.me/api/portraits/women/65.jpg",
-    "https://randomuser.me/api/portraits/men/76.jpg",
-    "https://randomuser.me/api/portraits/women/12.jpg",
-    
-  ].map((url, index) => (
-    <img
-      key={index}
-      src={url}
-      className={`avatar-img ${index > 0 ? "avatar-stack" : ""}`}
-      alt={`user${index + 1}`}
-    />
-  ))}
-
-  <div className="avatar-img avatar-stack bg-primary text-white d-flex justify-content-center align-items-center fw-bold">
-    +99
-  </div>
-</div>
+        <div className="d-flex justify-content-center align-items-center mt-3">
+          {[
+            "https://randomuser.me/api/portraits/men/32.jpg",
+            "https://randomuser.me/api/portraits/women/65.jpg",
+            "https://randomuser.me/api/portraits/men/76.jpg",
+            "https://randomuser.me/api/portraits/women/12.jpg",
+          ].map((url, index) => (
+            <img
+              key={index}
+              src={url}
+              className={`avatar-img ${index > 0 ? "avatar-stack" : ""}`}
+              alt={`user${index + 1}`}
+            />
+          ))}
+          <div className="avatar-img avatar-stack bg-primary text-white d-flex justify-content-center align-items-center fw-bold">
+            +99
+          </div>
+        </div>
 
         {/* Action Buttons */}
         <div className="mt-4 d-flex justify-content-center gap-3 flex-wrap">
-          <button type="button" className="btn btn-primary" onClick={() => setIsLoginOpen(true)}>
+          <button type="button" className="btn btn-primary" onClick={handleGetStarted}>
             Get Started
           </button>
-          <button type="button" className="btn btn-outline-secondary"onClick={() => window.location.href = "https://mocktalk-frontend-2tiv.vercel.app/docs/"}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() =>
+              window.open(
+                "https://mocktalk-frontend-2tiv.vercel.app/docs/",
+                "_blank"
+              )
+            }
+          >
             Learn More
-            
           </button>
         </div>
       </div>

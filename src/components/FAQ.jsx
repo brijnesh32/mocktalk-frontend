@@ -50,7 +50,7 @@ const FAQ = () => {
   return (
     <div className="container py-5" id="faqs">
       <div className="text-center mb-5">
-        <h2 className="fw-bold display-5">Frequently Asked Questions</h2>
+        <h2 className="fw-bold display-5">Frequently Asked <span className="text-primary">Questions</span></h2>
         <p className="text-muted">
           If your query isn't listed, email us at{" "}
           <a href="mailto:info@mocktalk.ai" className="text-primary fw-medium">

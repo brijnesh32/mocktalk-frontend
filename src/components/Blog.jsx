@@ -30,7 +30,8 @@ const Blog = () => {
     <section className="py-5 bg-white text-dark">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 className="fw-bold display-5 text-primary">From the MockTalk Blog</h2>
+          <h2 className="fw-bold display-5 ">From the <span className="text-primary">
+            MockTalk Blog</span></h2>
           <p className="fs-5 text-secondary">
             Explore insights, success stories, and the tech behind better interviews.
           </p>

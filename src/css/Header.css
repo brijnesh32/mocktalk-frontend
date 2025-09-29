@@ -81,7 +81,3 @@
         opacity: 1;
     }
 }
-
-.animate__backInDown {
-    animation: backInDown 1s both;
-}

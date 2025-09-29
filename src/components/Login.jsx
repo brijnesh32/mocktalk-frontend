@@ -52,7 +52,7 @@ const Login = ({ isOpen, onClose, setIsLoggedIn }) => {
           <i className="bi bi-facebook icon"></i> Login with Facebook
         </button>
 
-        <button className="login-btn signup">New User? Sign Up</button>
+        
       </div>
     </div>
   );

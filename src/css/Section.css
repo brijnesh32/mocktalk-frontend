@@ -1,5 +1,7 @@
 .mocktalk-bg {
-    background: url("../assets/background.gif") center center/cover no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     position: relative;
     min-height: 100vh;
     color: white;
@@ -10,12 +12,11 @@
     overflow: hidden;
 }
 
-/* Overlay gradient over GIF */
+/* Overlay gradient for better contrast */
 .mocktalk-bg::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(30, 0, 50, 0.6));
     z-index: 0;
 }
 
@@ -62,16 +63,15 @@
     background: #0099cc;
 }
 
-.btn-outline-secondary {
-    color: white;
-    border: 2px solid white;
+.btn-secondary {
+    background: #6c757d;
+    border: none;
     padding: 0.6rem 1.5rem;
-    border-radius: 50px;
     font-weight: 600;
+    border-radius: 50px;
     transition: 0.3s;
 }
 
-.btn-outline-secondary:hover {
-    background: white;
-    color: #000;
+.btn-secondary:hover {
+    background: #5a6268;
 }

@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Section from '../components/Section';
-import Discover from '../components/Discover';
-import Blog from '../components/Blog';
-import FAQ from '../components/FAQ';
-import Footer from '../components/Footer';
 import Login from '../components/Login';
-import Tools from '../components/Tools';
-import UserReview from '../components/UserReview';
+
+// Lazy-loaded components
+const Discover = lazy(() => import('../components/Discover'));
+const Tools = lazy(() => import('../components/Tools'));
+const UserReview = lazy(() => import('../components/UserReview'));
+const Blog = lazy(() => import('../components/Blog'));
+const FAQ = lazy(() => import('../components/FAQ'));
+const Footer = lazy(() => import('../components/Footer'));
 
 const LandingPage = ({ setIsLoggedIn, isLoggedIn }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -22,14 +24,21 @@ const LandingPage = ({ setIsLoggedIn, isLoggedIn }) => {
 
   return (
     <>
+      {/* Always-loaded components */}
       <Header setIsLoginOpen={setIsLoginOpen} />
-      <Section  setIsLoginOpen={setIsLoginOpen}/>
-      <Discover />
-      <Tools  setIsLoginOpen={setIsLoginOpen}/>
-      <UserReview />
-      <Blog />
-      <FAQ />
-      <Footer />
+      <Section setIsLoginOpen={setIsLoginOpen} />
+
+      {/* Lazy-loaded components */}
+      <Suspense fallback={<div className="loading text-center py-5">Loading...</div>}>
+        <Discover />
+        <Tools setIsLoginOpen={setIsLoginOpen} />
+        <UserReview />
+        <Blog />
+        <FAQ />
+        <Footer />
+      </Suspense>
+
+      {/* Login Modal */}
       <Login
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}
