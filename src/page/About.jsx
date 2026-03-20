@@ -8,7 +8,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import '../css/About.css';
+
 import { useState} from 'react';
 import Login from '../components/Login'; // Import your login modal
 

@@ -9,7 +9,7 @@ import React from 'react';
 import { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import '../css/Contact.css'
+
 import Login from '../components/Login'; // Import your login modal
 
 const Contact = () => {

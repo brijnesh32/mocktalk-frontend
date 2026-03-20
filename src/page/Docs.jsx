@@ -14,7 +14,7 @@ import reports from "../assets/images/reports.png"
 import Login from '../components/Login'; // Import your login modal
 
 
-import "../css/Docs.css"
+
 const Docs = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
