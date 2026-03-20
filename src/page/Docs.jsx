@@ -1,3 +1,9 @@
+<SEO
+  title="Documentation"
+  description="Learn how to use MockTalk.AI step by step."
+  url="https://mocktalk.vercel.app/docs"
+/>
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';

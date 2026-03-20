@@ -1,17 +1,16 @@
-import React, { useState ,useEffect} from "react";
-import "../css/UserForm.css"; // We'll create this CSS file
+import React, { useState, useEffect } from "react";
 
 const UserForm = () => {
   const [isCompact, setIsCompact] = useState(false);
 
   useEffect(() => {
     const handleSidebarToggle = (event) => {
-      setIsCompact(event.detail); // true or false
+      setIsCompact(event.detail);
     };
-
     window.addEventListener("sidebarToggle", handleSidebarToggle);
     return () => window.removeEventListener("sidebarToggle", handleSidebarToggle);
   }, []);
+
   const [formData, setFormData] = useState({
     fullName: "",
     role: "",
@@ -30,25 +29,33 @@ const UserForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://mocktalk-backend.onrender.com/api/start-interview/", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/start-interview/`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
         },
         body: JSON.stringify({
           name: formData.fullName,
           role: formData.role,
           education: formData.education,
           experience: formData.experience,
-          skills: formData.skills.split(",").map(s => s.trim()),  // send as array
-          question_count: formData.questionCount
+          skills: formData.skills.split(",").map((s) => s.trim()),
+          question_count: formData.questionCount,
         })
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        console.error("Backend did not return JSON:", text);
+        alert("Server error — please try again.");
+        return;
+      }
 
       if (response.ok) {
-        console.log("✅ Interview Started:", data);
         localStorage.setItem("reportId", data.report_id || "");
         localStorage.setItem("questions", JSON.stringify(data.questions));
         localStorage.setItem("name", formData.fullName);
@@ -58,26 +65,32 @@ const UserForm = () => {
         localStorage.setItem("skills", formData.skills);
         window.location.href = "/interview/Ai-Bot";
       } else {
-        console.error("❌ Error:", data.error);
-        alert("Error: " + data.error);
+        console.error("Error:", data.error);
+        alert("Error: " + (data.error || "Something went wrong"));
       }
     } catch (err) {
-      console.error("❌ Network error:", err);
+      console.error("Network error:", err);
       alert("Network error: " + err.message);
     }
   };
-  
 
   return (
     <div className={`form-container main-content ${isCompact ? "compact" : ""}`}>
       <div className="form-wrapper">
         <div className="form-header text-center mb-5">
           <h2 className="display-5 fw-bold text-primary">Candidate Information</h2>
-          <p className="lead text-muted">Fill in your details to start the interview process</p>
+          <p className="lead text-muted">
+            Fill in your details to start the interview process
+          </p>
         </div>
-        
-        <form onSubmit={handleSubmit} className="form-card shadow-lg p-4 p-md-5 rounded-3 bg-white">
+
+        <form
+          onSubmit={handleSubmit}
+          className="form-card shadow-lg p-4 p-md-5 rounded-3 bg-white"
+        >
           <div className="row g-3">
+
+            {/* Full Name */}
             <div className="col-md-6">
               <div className="form-floating mb-4">
                 <input
@@ -93,7 +106,8 @@ const UserForm = () => {
                 <label htmlFor="fullName">Full Name</label>
               </div>
             </div>
-            
+
+            {/* Role */}
             <div className="col-md-6">
               <div className="form-floating mb-4">
                 <input
@@ -109,7 +123,8 @@ const UserForm = () => {
                 <label htmlFor="role">Role Applying For</label>
               </div>
             </div>
-            
+
+            {/* Education */}
             <div className="col-12">
               <div className="form-floating mb-4">
                 <textarea
@@ -118,13 +133,14 @@ const UserForm = () => {
                   name="education"
                   value={formData.education}
                   onChange={handleChange}
-                  placeholder="e.g. B.Tech in Computer Science from XYZ University"
+                  placeholder="e.g. B.Tech in Computer Science"
                   style={{ height: "100px" }}
                 />
                 <label htmlFor="education">Education</label>
               </div>
             </div>
-            
+
+            {/* Experience */}
             <div className="col-12">
               <div className="form-floating mb-4">
                 <textarea
@@ -133,13 +149,14 @@ const UserForm = () => {
                   name="experience"
                   value={formData.experience}
                   onChange={handleChange}
-                  placeholder="e.g. 1 year at ABC Corp as React Developer"
+                  placeholder="e.g. 1 year React Developer"
                   style={{ height: "100px" }}
                 />
                 <label htmlFor="experience">Experience</label>
               </div>
             </div>
-            
+
+            {/* Skills + Question Count */}
             <div className="col-md-8">
               <div className="form-floating mb-4">
                 <input
@@ -149,12 +166,12 @@ const UserForm = () => {
                   name="skills"
                   value={formData.skills}
                   onChange={handleChange}
-                  placeholder="e.g. React, Redux, Django, Firebase"
+                  placeholder="React, Django, Firebase"
                 />
                 <label htmlFor="skills">Skills (comma separated)</label>
               </div>
             </div>
-            
+
             <div className="col-md-4">
               <div className="form-floating mb-4">
                 <select
@@ -175,7 +192,8 @@ const UserForm = () => {
                 <label htmlFor="questionCount">Number of Questions</label>
               </div>
             </div>
-            
+
+            {/* Achievements */}
             <div className="col-12">
               <div className="form-floating mb-4">
                 <textarea
@@ -184,18 +202,23 @@ const UserForm = () => {
                   name="achievements"
                   value={formData.achievements}
                   onChange={handleChange}
-                  placeholder="e.g. Won Hackathon 2024, Top 10 in Codeforces"
+                  placeholder="Won Hackathon 2024"
                   style={{ height: "100px" }}
                 />
                 <label htmlFor="achievements">Achievements (Optional)</label>
               </div>
             </div>
-            
+
+            {/* Submit */}
             <div className="col-12 text-center mt-3">
-              <button type="submit" className="btn btn-primary btn-lg px-5 py-3 submit-btn">
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg px-5 py-3 submit-btn"
+              >
                 Start Interview <i className="bi bi-arrow-right ms-2"></i>
               </button>
             </div>
+
           </div>
         </form>
       </div>

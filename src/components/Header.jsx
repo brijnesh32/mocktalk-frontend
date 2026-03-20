@@ -1,5 +1,4 @@
-import React from "react";
-import "../css/Header.css"; // You can change this to Welcome.css if that's the correct file
+
 
 const Header = ({ setIsLoginOpen }) => {
   return (

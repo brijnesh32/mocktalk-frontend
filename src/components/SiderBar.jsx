@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
 import { auth } from "../firebase";
-import "../css/SiderBar.css";
+
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -38,28 +38,31 @@ const Sidebar = () => {
     document.fullscreenElement ? document.exitFullscreen() : el.requestFullscreen();
   };
 
-  const handleToggle = () => {
-    if (isMobile) {
-      setSidebarOpen(!sidebarOpen);
-    } else {
-      const newCompact = !compact;
-      setCompact(newCompact);
-      window.dispatchEvent(new CustomEvent("sidebarToggle", { detail: newCompact }));
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      localStorage.clear();
-      sessionStorage.clear();
-      await signOut(auth);
-      alert("You have been logged out successfully.");
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
-      alert("Logout failed. Please try again.");
-    }
-  };
+const handleToggle = () => {
+  if (isMobile) {
+    setSidebarOpen(!sidebarOpen);
+  } else {
+    const newCompact = !compact;
+    setCompact(newCompact);
+    // This class on <body> drives the navbar + content layout in CSS
+    document.body.classList.toggle("sidebar-compact", newCompact);
+    // Keep this so CampaignContent / other pages still get the event
+    window.dispatchEvent(new CustomEvent("sidebarToggle", { detail: newCompact }));
+  }
+};
+const handleLogout = async () => {
+  try {
+    localStorage.clear();
+    sessionStorage.clear();
+    document.body.classList.remove("sidebar-compact"); // ADD this line
+    await signOut(auth);
+    alert("You have been logged out successfully.");
+    navigate("/login");
+  } catch (error) {
+    console.error("Logout failed:", error);
+    alert("Logout failed. Please try again.");
+  }
+};
 
   const handleNavClick = () => {
     if (isMobile) {

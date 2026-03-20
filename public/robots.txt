@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /interview/
+Disallow: /interview/*
+
+Sitemap: https://mocktalk.vercel.app/sitemap.xml

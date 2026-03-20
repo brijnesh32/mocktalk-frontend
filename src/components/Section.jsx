@@ -1,4 +1,4 @@
-import "../css/Section.css";
+
 import backgroundGif from "../assets/background.gif"; // your GIF
 
 const Section = () => {

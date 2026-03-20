@@ -1,30 +1,30 @@
-import React from "react";
-import "../css/Blog.css"; // Keep your styles here
+
+
 
 const Blog = () => {
-  const blogs = [
-    {
-      img: "https://fyx.ai/media/blog_backgrounds/ATWIN_20250212181704_Aipowered.png",
-      tag: "AI Insights",
-      date: "February 12, 2025",
-      title: "How MockTalk Uses AI to Transform Interview Preparation",
-      link: "/blog_detail/ai-interview-prep/",
-    },
-    {
-      img: "https://fyx.ai/media/blog_backgrounds/ATWIN_20250212181438_viral.jpg",
-      tag: "Tech Trends",
-      date: "March 5, 2025",
-      title: "Can MockTalk Simulate Real Interview Pressure? Here's the Answer",
-      link: "/blog_detail/mocktalk-real-simulation/",
-    },
-    {
-      img: "https://fyx.ai/media/blog_backgrounds/ATWIN_20250212181128_howaiknowsbetter.jpeg",
-      tag: "Education",
-      date: "April 1, 2025",
-      title: "From Nervous to Confident: How Students Benefit from MockTalk",
-      link: "/blog_detail/confidence-through-ai/",
-    },
-  ];
+ const blogs = [
+  {
+    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
+    tag: "AI Insights",
+    date: "February 12, 2025",
+    title: "How MockTalk Uses AI to Transform Interview Preparation",
+    link: "/blog_detail/ai-interview-prep/",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80",
+    tag: "Tech Trends",
+    date: "March 5, 2025",
+    title: "Can MockTalk Simulate Real Interview Pressure? Here's the Answer",
+    link: "/blog_detail/mocktalk-real-simulation/",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
+    tag: "Education",
+    date: "April 1, 2025",
+    title: "From Nervous to Confident: How Students Benefit from MockTalk",
+    link: "/blog_detail/confidence-through-ai/",
+  },
+];
 
   return (
     <section className="py-5 bg-white text-dark">

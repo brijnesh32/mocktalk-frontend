@@ -1,7 +1,7 @@
 // src/components/Loading.jsx
 import React from 'react';
 import loadingGif from '../assets/Loading.gif'; // ✅ renamed
-import "../css/Loading.css"; 
+
 
 const Loading = () => {
   return (

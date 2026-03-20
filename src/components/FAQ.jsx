@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/FAQ.css"; // Make sure this file exists or change the path accordingly
+
 
 
 const faqs = [

@@ -1,3 +1,9 @@
+import SEO from '../components/Seo';
+<SEO
+  title="AI Mock Interview"
+  description="Practice interviews with AI. Get instant feedback, scores and improvement tips."
+  url="https://mocktalk.vercel.app"
+/>
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';

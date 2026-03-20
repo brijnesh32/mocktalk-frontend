@@ -1,4 +1,10 @@
 // src/page/About.jsx
+// About.jsx
+<SEO
+  title="About"
+  description="Learn how MockTalk.AI helps candidates ace interviews with AI-powered mock sessions."
+  url="https://mocktalk.vercel.app/about"
+/>
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';

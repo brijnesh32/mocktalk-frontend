@@ -1,4 +1,10 @@
 // src/page/Contact.jsx
+// Contact.jsx
+<SEO
+  title="Contact Us"
+  description="Get in touch with the MockTalk.AI team."
+  url="https://mocktalk.vercel.app/contact"
+/>
 import React from 'react';
 import { useState } from 'react';
 import Header from '../components/Header';

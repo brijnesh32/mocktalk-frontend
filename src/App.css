@@ -13,3 +13,1697 @@
     transform: scale(1);
   }
 }
+
+/* ================================================================
+   MockTalk.AI  —  SINGLE GLOBAL STYLESHEET  v2.0
+   ----------------------------------------------------------------
+   Replaces ALL of these (delete them after switching):
+     About.css  AudienceContent.css  Blog.css  Blogs.css
+     CampaignContent.css  Contact.css  Docs.css  FAQ.css
+     Footer.css  Header.css  Layout.css  Loading.css  Login.css
+     ReportCard.css  Section.css  SiderBar.css
+     TestimonialSlider.css  Tools.css  UserForm.css
+     UserReview.css  Welcome.css
+   ----------------------------------------------------------------
+   HOW TO USE:
+     1. Delete every CSS file listed above from src/css/
+     2. Copy this file to  src/css/mocktalk-global.css
+     3. In App.jsx add ONE import at the top:
+           import './css/mocktalk-global.css';
+     4. Remove every individual CSS import from every component.
+     5. Apply the 4 small JSX changes shown at the very bottom.
+   ================================================================ */
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 1  DESIGN TOKENS
+   ──────────────────────────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --mt-blue: #007bff;
+  --mt-blue-dark: #0056b3;
+  --mt-blue-light: #e6f0ff;
+  --mt-red: #ff4d4d;
+  --mt-red-dark: #cc0000;
+  --mt-green: #28a745;
+  --mt-yellow: #ffc107;
+  --mt-cyan: #17a2b8;
+
+  /* Layout */
+  --sidebar-w: 240px;
+  --sidebar-col: 70px;
+  --navbar-h: 70px;
+
+  /* Surfaces */
+  --bg-page: #f5fafe;
+  --bg-card: #ffffff;
+  --bg-muted: #f8f9fa;
+
+  /* Text */
+  --text-1: #1e293b;
+  --text-2: #64748b;
+  --text-3: #94a3b8;
+
+  /* Borders + Shadows */
+  --border: #e2e8f0;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, .06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, .10);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, .12);
+
+  /* Misc */
+  --ease: .3s ease;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 2  RESET / BASE
+   ──────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg-page);
+  color: var(--text-1);
+  margin: 0;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   APP SHELL  (SiderBar.css  +  Layout.css  — FIX #1 #3 #4 #8)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────────────────────────
+   § 3  SIDEBAR
+   ──────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--mt-blue);
+  color: #fff;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1000;
+  overflow: hidden;
+  transition: width var(--ease), padding var(--ease);
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.sidebar li {
+  margin-bottom: 20px;
+}
+
+.sidebar .nav-link {
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: var(--r-md);
+  white-space: nowrap;
+  transition: background var(--ease);
+}
+
+.sidebar .nav-link:hover {
+  background: var(--mt-blue-dark);
+}
+
+.logout {
+  background: var(--mt-red);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--r-md);
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: background var(--ease);
+}
+
+.logout:hover {
+  background: var(--mt-red-dark);
+}
+
+/* compact */
+.sidebar.compact {
+  width: var(--sidebar-col);
+  padding: 25px 10px;
+}
+
+.sidebar.compact h2 {
+  font-size: 0;
+  margin-bottom: 20px;
+}
+
+.sidebar.compact h2 i {
+  font-size: 22px;
+  margin-right: 0;
+}
+
+.sidebar.compact .nav-link {
+  justify-content: center;
+  font-size: 0;
+}
+
+.sidebar.compact .nav-link i {
+  font-size: 20px;
+  margin: 0;
+}
+
+.sidebar.compact .logout {
+  font-size: 0;
+  padding: 12px;
+  justify-content: center;
+}
+
+.sidebar.compact .logout i {
+  font-size: 20px;
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 4  TOP NAVBAR
+   FIX #3 #4 — single rule; left offset driven by body class
+   added via JS (document.body.classList.toggle('sb-compact'))
+   instead of the broken CSS sibling selector.
+   ──────────────────────────────────────────────────────────────── */
+.top-navbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-w);
+  right: 0;
+  height: var(--navbar-h);
+  background: var(--mt-blue);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 30px;
+  z-index: 999;
+  box-shadow: var(--shadow-sm);
+  transition: left var(--ease);
+}
+
+body.sb-compact .top-navbar {
+  left: var(--sidebar-col);
+}
+
+.btn-balance {
+  background: linear-gradient(to right, #1c98fc, #32ded4);
+  border: none;
+  padding: 10px 18px;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 18px;
+  margin-right: 10px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: opacity var(--ease);
+}
+
+.btn-balance:hover {
+  opacity: .9;
+}
+
+.profile-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.profile-link {
+  text-decoration: none;
+  color: #fff;
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 5  MAIN CONTENT AREA  — single authoritative definition
+   FIX #1  merged conflicting copies from SiderBar.css +
+           ReportCard.css into one place.
+   FIX #2  inline style="marginLeft:15%" / marginRight:70px
+           removed from JSX — layout driven purely by CSS.
+   ──────────────────────────────────────────────────────────────── */
+.main-content {
+  margin-left: var(--sidebar-w);
+  margin-top: var(--navbar-h);
+  padding: 40px;
+  min-height: calc(100vh - var(--navbar-h));
+  background: var(--bg-page);
+  transition: margin-left var(--ease);
+}
+
+body.sb-compact .main-content {
+  margin-left: var(--sidebar-col);
+}
+
+/* legacy: components that still pass isCompact class directly */
+.main-content.compact {
+  margin-left: var(--sidebar-col);
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 6  RESPONSIVE — MOBILE
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: var(--sidebar-w) !important;
+    transition: transform var(--ease);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, .18);
+  }
+
+  .top-navbar {
+    left: 0 !important;
+    padding-left: 60px;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 20px 16px;
+  }
+
+  body.sb-compact .top-navbar {
+    left: 0 !important;
+  }
+
+  body.sb-compact .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 425px) {
+  .main-content {
+    padding: 14px 10px;
+  }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   PUBLIC PAGES  (Header / Landing / About / Contact / Blog / Docs)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────────────────────────
+   § 7  PUBLIC NAVBAR  (Header.jsx)
+   ──────────────────────────────────────────────────────────────── */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.login-button {
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 20px;
+}
+
+@media (max-width: 767px) {
+  .navbar-nav {
+    flex-direction: column;
+    align-items: center;
+    gap: .75rem;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 8  HERO / SECTION  (Section.jsx + Welcome.css)
+   FIX #9 — was duplicated across Header.css and Section.css.
+   Both used .mocktalk-bg, .avatar-img, .avatar-stack.
+   Now defined once here.
+   ──────────────────────────────────────────────────────────────── */
+.mocktalk-bg {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 100vh;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.mocktalk-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.mocktalk-bg .container {
+  position: relative;
+  z-index: 1;
+}
+
+.mocktalk-bg .margin-top {
+  margin-top: 10%;
+}
+
+/* white landing bg variant with dot grid */
+.mocktalk-bg-white {
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.mocktalk-bg-white::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--mt-blue) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: .1;
+  z-index: 0;
+}
+
+.mocktalk-color {
+  color: var(--mt-blue);
+}
+
+.avatar-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.avatar-stack {
+  margin-left: -12px;
+  z-index: 0;
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 9  TOOLS SECTION  (Tools.jsx / Tools.css)
+   ──────────────────────────────────────────────────────────────── */
+.tool-img {
+  transition: transform var(--ease);
+}
+
+.tool-img:hover {
+  transform: scale(1.02);
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 10  ABOUT PAGE  (About.css)
+   ──────────────────────────────────────────────────────────────── */
+.about-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+.about-hero {
+  background: linear-gradient(135deg, #0d6efd, #0c0c0c);
+  padding: 5rem 0;
+  margin-bottom: 3rem;
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 4px 20px rgba(13, 110, 253, .2);
+  animation: fadeInDown .6s ease-out;
+}
+
+.text-highlight {
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+
+.text-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, .3);
+  z-index: -1;
+  border-radius: 3px;
+}
+
+.about-img-container {
+  background: var(--bg-card);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  border-top: 5px solid var(--mt-blue);
+  transition: all var(--ease);
+  animation: fadeInUp .6s ease-out;
+}
+
+.about-img-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, .15);
+}
+
+.bg-primary-soft {
+  background-color: rgba(13, 110, 253, .1) !important;
+  color: #0d6efd;
+}
+
+.bg-success-soft {
+  background-color: rgba(25, 135, 84, .1) !important;
+  color: #198754;
+}
+
+.bg-info-soft {
+  background-color: rgba(13, 202, 240, .1) !important;
+  color: #0dcaf0;
+}
+
+.icon-lg {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 50%;
+}
+
+@media (max-width: 992px) {
+  .about-hero {
+    padding: 3rem 0;
+  }
+
+  .about-img-container {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    padding: 2rem 0;
+    border-radius: 0;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 11  CONTACT PAGE  (Contact.css)
+   ──────────────────────────────────────────────────────────────── */
+.contact-hero {
+  background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-hero>.container {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-image {
+  transform: perspective(1000px) rotateY(-15deg);
+  transition: transform var(--ease);
+  border: 5px solid rgba(255, 255, 255, .2);
+}
+
+.contact-image:hover {
+  transform: perspective(1000px) rotateY(0deg);
+}
+
+/* scoped to avoid clashing with .submit-btn in UserForm */
+.contact-submit-btn {
+  background: linear-gradient(to right, #3a7bd5, #00d2ff);
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  width: 100%;
+  color: #fff;
+  transition: all var(--ease);
+}
+
+.contact-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* FIX #5 — contact accordion scoped so it can't override FAQ accordion */
+.contact-page .accordion-button {
+  font-weight: 600;
+  padding: 15px 20px;
+}
+
+.contact-page .accordion-button:focus {
+  box-shadow: none;
+}
+
+.contact-page .accordion-button:not(.collapsed) {
+  background: var(--bg-muted);
+  color: #3a7bd5;
+}
+
+@media (max-width: 768px) {
+  .contact-hero {
+    text-align: center;
+  }
+
+  .contact-hero .d-flex {
+    justify-content: center;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 12  FAQ  (FAQ.css)
+   FIX #5 — scoped to .faq-section so it can't conflict with
+   the contact page accordion defined directly above.
+   ──────────────────────────────────────────────────────────────── */
+.faq-section {
+  background: var(--bg-muted);
+}
+
+.faq-section .accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-section .accordion-button {
+  font-weight: 600;
+  font-size: 1.1rem;
+  background: var(--bg-card);
+  text-align: center;
+  justify-content: center;
+}
+
+.faq-section .accordion-button:focus {
+  box-shadow: none;
+}
+
+.faq-section .accordion-button::after {
+  transition: transform var(--ease);
+  margin-left: auto;
+}
+
+.faq-section .accordion-button:not(.collapsed)::after {
+  transform: rotate(180deg);
+}
+
+.faq-section .accordion-body {
+  font-size: 1rem;
+  color: #444;
+  text-align: center;
+  padding: 1rem 2rem;
+}
+
+.faq-section .accordion-item {
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+  margin-bottom: .75rem;
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 13  BLOG  (Blog.css + Blogs.css)
+   ──────────────────────────────────────────────────────────────── */
+.blog-hover {
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+
+.blog-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.blog-img {
+  transition: transform .5s ease;
+}
+
+.blog-hover:hover .blog-img {
+  transform: scale(1.04);
+}
+
+.blog-title {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+/* blog detail content */
+.blog-content {
+  line-height: 1.8;
+  font-size: 1.1rem;
+  color: #495057;
+}
+
+.blog-content p {
+  margin-bottom: 1.5rem;
+}
+
+.blog-content img {
+  max-width: 100%;
+  border-radius: .5rem;
+  margin: 1.5rem 0;
+}
+
+/* Blogs.css modal animation */
+.modal {
+  animation: fadeIn .3s ease-in-out;
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 14  DOCS PAGE  (Docs.css)
+   ──────────────────────────────────────────────────────────────── */
+.docs-container {
+  display: flex;
+  min-height: calc(100vh - 120px);
+  background: #f8fafc;
+  position: relative;
+}
+
+.docs-sidebar {
+  width: 280px;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: #fff;
+  padding: 1.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  transition: left var(--ease);
+}
+
+.sidebar-header {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-title {
+  font-weight: 600;
+  color: #fff;
+  margin: 50px 0 1rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.nav-section-title {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: rgba(255, 255, 255, .6);
+  margin-bottom: .5rem;
+}
+
+/* docs nav links — distinct selector to avoid colliding with .sidebar .nav-link */
+.docs-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .5rem .75rem;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, .8);
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+.docs-sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+}
+
+.docs-sidebar .nav-link.active {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.docs-content {
+  flex: 1;
+  padding: 2rem 0;
+  overflow-x: hidden;
+}
+
+.docs-header {
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #fff, #f1f5f9);
+  border-bottom: 1px solid var(--border);
+}
+
+.docs-section {
+  margin-bottom: 4rem;
+  padding: 2rem;
+  background: var(--bg-card);
+  border-radius: var(--r-lg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+  border: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header h2 {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+}
+
+.section-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.media-container {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.media-container img {
+  display: block;
+  width: 100%;
+  transition: transform var(--ease);
+  margin-top: 20px;
+}
+
+.media-container:hover img {
+  transform: scale(1.02);
+}
+
+.media-caption {
+  font-size: .875rem;
+  color: var(--text-2);
+  text-align: center;
+  margin-top: .5rem;
+}
+
+.step-list {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.step-list li {
+  margin-bottom: .75rem;
+  color: #334155;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.step-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .5rem;
+  width: 8px;
+  height: 8px;
+  background: #3b82f6;
+  border-radius: 50%;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--ease);
+}
+
+.sidebar-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 767px) {
+  .docs-sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    height: 100vh;
+    z-index: 999;
+    transition: left var(--ease);
+  }
+
+  .docs-sidebar.open {
+    left: 0;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, .1);
+  }
+
+  .docs-content {
+    margin-left: 0;
+  }
+
+  .docs-section {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar-toggle {
+    display: none;
+  }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   APP PAGES  (protected routes inside /interview/*)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────────────────────────
+   § 15  LOADING SCREEN  (Loading.css)
+   ──────────────────────────────────────────────────────────────── */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--bg-muted);
+}
+
+.loading-gif {
+  width: 250px;
+  height: 220px;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .loading-gif {
+    width: 200px;
+    height: 180px;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 16  LOGIN MODAL  (Login.css)
+   ──────────────────────────────────────────────────────────────── */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, .7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: var(--r-lg);
+  position: relative;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  animation: popIn .3s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--text-1);
+}
+
+.brand {
+  color: var(--mt-blue);
+  font-weight: 700;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.login-btn.google {
+  background: #db4437;
+  color: #fff;
+}
+
+.login-btn.facebook {
+  background: #3b5998;
+  color: #fff;
+}
+
+.login-btn:hover {
+  transform: scale(1.03);
+}
+
+.login-btn .icon {
+  font-size: 1.2rem;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 17  USER FORM  (UserForm.css)
+   ──────────────────────────────────────────────────────────────── */
+.form-container {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  min-height: calc(100vh - var(--navbar-h));
+  padding: 2rem 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.form-header {
+  animation: fadeInDown .6s ease-out;
+}
+
+.form-card {
+  border: none;
+  border-top: 5px solid var(--mt-blue);
+  border-radius: var(--r-md);
+  background: var(--bg-card);
+  transition: box-shadow var(--ease);
+  animation: fadeInUp .6s ease-out;
+}
+
+.form-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.submit-btn {
+  border-radius: 50px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  background: var(--mt-blue);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, .3);
+  transition: all var(--ease);
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(0, 123, 255, .4);
+  background: var(--mt-blue-dark);
+}
+
+@media (max-width: 768px) {
+  .form-wrapper {
+    padding: 0 1.5rem;
+  }
+
+  .form-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 18  AI CHAT  (CampaignContent.css)
+   FIX #7 — paddingTop:'0px' removed from JSX; .main-content
+   already provides the correct top offset.
+   ──────────────────────────────────────────────────────────────── */
+/* ────────────────────────────────────────────────────────────────
+   § 18  AI CHAT  (CampaignContent.css)
+   STRUCTURE:
+     <div class="main-content">        ← sidebar + navbar offset
+       <div class="campaign-content">  ← flex column: bot + chat
+         <div class="bot-image-container">
+         <div class="chat-container">  ← grows to fill space
+   ──────────────────────────────────────────────────────────────── */
+
+/* Inner layout wrapper — NOT the page wrapper */
+.campaign-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  /* fills height inside .main-content */
+  height: calc(100vh - var(--navbar-h) - 80px);
+}
+
+/* Bot GIF */
+.bot-image-container {
+  margin-bottom: 1rem;
+  animation: botBounce 2s ease-in-out infinite alternate;
+  flex-shrink: 0;
+}
+
+.bot-image {
+  width: 110px;
+  height: auto;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, .2);
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+
+.bot-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 123, 255, .3);
+}
+
+/* Chat card — takes remaining vertical space */
+.chat-container {
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: 860px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Scrollable messages */
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.chat-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+/* Message bubbles */
+.message {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  font-size: 14px;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.message p {
+  margin: 0;
+}
+
+.message.bot {
+  background: #c1dcf3;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.message.user {
+  background: #9fdd9f;
+  align-self: flex-end;
+  text-align: right;
+  border-bottom-right-radius: 4px;
+}
+
+/* Input row — never wraps */
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.input-area input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--ease);
+}
+
+.input-area input:focus {
+  border-color: var(--mt-blue);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, .12);
+}
+
+.input-area button {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 3px 8px rgba(0, 123, 255, .15);
+  transition: opacity var(--ease), transform var(--ease);
+}
+
+.input-area button:hover {
+  opacity: .9;
+  transform: translateY(-1px);
+}
+
+.input-area button:active {
+  transform: translateY(0);
+}
+
+.mic-active {
+  animation: micPulse 1s infinite;
+}
+
+/* ── Tablet ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .campaign-content {
+    height: calc(100vh - var(--navbar-h) - 40px);
+  }
+
+  .bot-image {
+    width: 88px;
+  }
+
+  .bot-image-container {
+    margin-bottom: .75rem;
+  }
+
+  .chat-container {
+    padding: 16px;
+  }
+
+  .message {
+    max-width: 88%;
+    font-size: 13px;
+  }
+
+  .input-area button {
+    padding: 10px 14px;
+  }
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .campaign-content {
+    height: calc(100vh - var(--navbar-h) - 20px);
+  }
+
+  .bot-image {
+    width: 70px;
+  }
+
+  .bot-image-container {
+    margin-bottom: .5rem;
+  }
+
+  .chat-container {
+    padding: 12px;
+    border-radius: var(--r-sm);
+  }
+
+  .message {
+    max-width: 94%;
+    font-size: 13px;
+  }
+
+  .input-area {
+    gap: 6px;
+  }
+
+  .input-area input {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .input-area button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+/* ── Very small ───────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .bot-image {
+    width: 58px;
+  }
+
+  .input-area button {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 19  REPORT CARD  (ReportCard.css)
+   FIX #1  — removed duplicate .main-content block
+   FIX #2  — removed style="width:70%;marginRight:70px" from JSX
+   FIX #6  — gradient text scoped to h4 only (was clobbering
+              Bootstrap badge & small text colours everywhere)
+   FIX #10 — removed max-height:300px nested scroll on summary
+   ──────────────────────────────────────────────────────────────── */
+.report-card {
+  border: none;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--bg-card);
+  animation: fadeIn .6s ease-out forwards;
+  transition: all .3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.report-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, .1);
+}
+
+.report-card .card-header {
+  padding: 1.75rem;
+  border-bottom: none;
+  background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+}
+
+.report-card .card-header h2 {
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+
+.report-header {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+  margin-bottom: 1.5rem;
+}
+
+.report-header p {
+  margin-bottom: .5rem;
+  font-size: 1.05rem;
+}
+
+.report-section {
+  margin-bottom: 1.75rem;
+  border-radius: var(--r-md);
+  background: #f8fafc;
+  border: 1px solid rgba(0, 0, 0, .03);
+  transition: all var(--ease);
+}
+
+.report-section:hover {
+  background: var(--bg-card);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .03);
+}
+
+.report-section h4 {
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+}
+
+/* FIX #6 — gradient text ONLY on the section heading, not on badges / small text */
+.report-section h4.text-success {
+  background: linear-gradient(135deg, #28a745, #5cb85c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.report-section h4.text-warning {
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.report-section h4.text-info {
+  background: linear-gradient(135deg, #17a2b8, #0dcaf0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.report-summary {
+  border-radius: var(--r-md);
+  background: linear-gradient(135deg, rgba(23, 162, 184, .03), rgba(13, 110, 253, .03));
+  border: 1px solid rgba(13, 110, 253, .1);
+}
+
+/* FIX #10 — was max-height:300px;overflow-y:auto creating a nested scrollbar */
+.report-summary>div {
+  padding-right: .5rem;
+}
+
+.report-card .card-footer {
+  background: var(--bg-muted);
+  border-top: 1px solid rgba(0, 0, 0, .03);
+  padding: 1.25rem;
+  font-size: .9rem;
+  color: var(--text-2);
+}
+
+.list-group-item {
+  padding: .85rem 1.25rem .85rem 2rem;
+  background: transparent;
+  border-color: rgba(0, 0, 0, .03);
+  position: relative;
+  transition: all var(--ease);
+}
+
+.list-group-item:first-child {
+  border-top: none;
+}
+
+.list-group-item:hover {
+  transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+  .report-header .text-md-end {
+    text-align: left !important;
+  }
+
+  .report-card .card-header {
+    padding: 1.25rem;
+  }
+
+  .report-card .card-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 20  CANDIDATE REPORTS LIST  (AudienceContent.css)
+   FIX #2 — removed style="marginLeft:15%" from JSX
+   ──────────────────────────────────────────────────────────────── */
+.reports-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.report-list {
+  max-height: 72vh;
+  overflow-y: auto;
+  padding-right: .5rem;
+}
+
+.report-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.report-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.report-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.report-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.report-item {
+  border: none;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--ease), box-shadow var(--ease);
+  animation: fadeIn .4s ease-out forwards;
+  animation-delay: calc(var(--item-order, 0) * .08s);
+}
+
+.report-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 21  SHARED PROGRESS BAR
+   ──────────────────────────────────────────────────────────────── */
+.progress {
+  background: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.progress-bar {
+  font-size: .75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width .8s ease-in-out;
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 22  TESTIMONIALS  (TestimonialSlider.css + UserReview.css)
+   ──────────────────────────────────────────────────────────────── */
+.testimonial-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--mt-blue);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
+  display: block;
+  margin: 0 auto;
+}
+
+.custom-btn {
+  min-width: 100px;
+  border-radius: 30px;
+  font-weight: 500;
+  transition: all var(--ease);
+}
+
+.custom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   § 23  FOOTER  (Footer.css)
+   ──────────────────────────────────────────────────────────────── */
+.footer {
+  background: #0d1117;
+  color: #d1d5db;
+}
+
+.footer-link {
+  color: #9ca3af;
+  text-decoration: none;
+  display: block;
+  margin-bottom: .5rem;
+  position: relative;
+  transition: color var(--ease);
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background: var(--mt-blue);
+  transition: width var(--ease);
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+.social-icons a {
+  font-size: 1.5rem;
+  color: #9ca3af;
+  transition: transform var(--ease), color var(--ease);
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  color: var(--mt-blue);
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   SHARED ANIMATIONS
+   ════════════════════════════════════════════════════════════════ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+@keyframes botBounce {
+  from {
+    transform: translateY(0)
+  }
+
+  to {
+    transform: translateY(-10px)
+  }
+}
+
+@keyframes micPulse {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0px #4caf50)
+  }
+
+  50% {
+    filter: drop-shadow(0 0 8px #4caf50)
+  }
+}

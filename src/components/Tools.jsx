@@ -1,5 +1,4 @@
-import React from "react";
-import "../css/Tools.css"; // optional custom CSS
+
 import Forming from "../assets/images/formimg.png";
 import interv from "../assets/images/interv.png";
 import report from"../assets/images/report.jpg";
